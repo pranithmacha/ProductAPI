@@ -1,4 +1,9 @@
 # TargetProductAPI
+
+Target Product API consists of two services. Product API, a Spring Boot REST service which is used 
+to get product details like product name and price. Product API gets product name from Product Name REST service 
+which is a Python Flask REST service. 
+                                                     
                                                      Product API 
 Description
 
@@ -30,11 +35,93 @@ Endpoints
      
     GET /products/{id} gets a product by product id
     PUT /products/{id} updates product price 
-    
-                                       
-Product Name API
-Python 2.7
-Flask 0.12.2
-install pip - https://packaging.python.org/guides/installing-using-linux-tools/
-install virtualenv - https://packaging.python.org/guides/installing-using-pip-and-virtualenv/
 
+
+GET /products/{id}           
+
+    This endpoint returns product details by product id. 
+
+    Request
+        GET /products/1234567
+    Response
+                    {
+                         "id": 1234567,
+                         "name": "big movie",
+                         "current_price": {
+                             "value": 999.87,
+                             "currencyCode": "USD"
+                         }
+                     }
+        
+PUT /products/{id}           
+
+    This endpoint updates price of a product by product id. 
+    Request
+        PUT /products/1234567
+    
+        payload {
+                     "id": 1234567,
+                     "name": "big movie",
+                     "current_price": {
+                         "value": 999.87,
+                         "currencyCode": "USD"
+                     }
+                 }
+        
+    Response
+        Http status 204 No content, indicating operation was successful
+        Http status 400 Bad request, with ValidationException if price is not provided
+        
+                            
+                                        Product Name API
+Description           
+
+    Product Name API is a Python Flask REST service to retreive product names. 
+    
+Tech Stack           
+
+     Python 2.7 (can work with later versions)
+     Flask 0.12.2
+     
+Setup   
+     
+     Needs Python installation
+
+     install pip - https://packaging.python.org/guides/installing-using-linux-tools/
+     install virtualenv - https://packaging.python.org/guides/installing-using-pip-and-virtualenv/
+     
+     Virtual environment
+        Create a virtual environment target by executing virtualenv -v target
+        To activate virtual environment, run commmand source target/bin/activate
+     Installing packages
+        Navigate to project_root/TargetProductNameService
+        Install packages by running pip install -r requirements.txt
+     Run server
+        To run server, from the same folder, run commad python productnameservice.py
+
+GET /products/{id}           
+
+    This endpoint returns product details by product id. 
+
+    Request
+        GET /products/1234567
+    Response
+                    {
+                         "id": 1234567,
+                         "name": "big movie",
+                     }
+        
+POST /products/{id}           
+
+    This endpoint updates price of a product by product id. 
+    Request
+        POST /products
+    
+        payload {
+                     "id": 1234567,
+                     "name": "big movie",
+                 }
+        
+    Response
+        Http status 201, indicating operation was successful
+        Http status 400 Bad request, if name or id is not provided
