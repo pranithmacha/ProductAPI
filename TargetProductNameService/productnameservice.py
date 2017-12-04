@@ -21,6 +21,8 @@ def get_product(id):
     :returns : product id and name if product exists / 404 not found if id is empty /
                id and None if product is not found
     """
+    if not products.get(id, None):
+        return Response(status=404)
     _product = dict()
     _product["id"] = id
     _product["name"] = products.get(id, None)
