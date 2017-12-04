@@ -41,6 +41,8 @@ public class ProductNameWebserviceClient {
         String rest = get(Constants.PRODUCT_NAME_WS_URL + productId.toString());
         try {
             productFromService = mapper.readValue(rest, ProductFromService.class);
+            if(productFromService.getName() == null || productFromService.getName().isEmpty())
+                throw new IOException("product not found in name ws");
             log.info("got product name from name ws for id: " + productId.toString());
         } catch (IOException ex) {
             log.error("could not parse JSON response from name ws " + productFromService.toString(), ex);
