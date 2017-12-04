@@ -37,11 +37,7 @@ public class ProductController {
     @GetMapping(path = "/{id}")
     public ProductDTO getProduct(@PathVariable("id") long id) {
         ProductDTO product;
-        try {
-            product = productService.getProduct(id);
-        } catch (IOException ex) {
-            throw new ResourceNotFoundException("could not fetch name");
-        }
+        product = productService.getProduct(id);
         return product;
     }
 

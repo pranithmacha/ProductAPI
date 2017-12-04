@@ -15,8 +15,6 @@ import org.springframework.stereotype.Service;
 
 import static org.springframework.data.cassandra.repository.support.BasicMapId.id;
 
-import java.io.IOException;
-
 
 /**
  * Created by pranith macha on 12/3/17.
@@ -38,7 +36,7 @@ public class ProductServiceImpl implements ProductService {
 
 
     @Override
-    public ProductDTO getProduct(long productId) throws IOException {
+    public ProductDTO getProduct(long productId) {
         MapId mapid = id("productid", productId);
         ProductDAO productDAO = myProductRepository.findOne(mapid);
         if (productDAO == null) {

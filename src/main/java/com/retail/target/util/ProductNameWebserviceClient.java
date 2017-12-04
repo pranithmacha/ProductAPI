@@ -2,6 +2,8 @@ package com.retail.target.util;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.retail.target.data.ProductFromService;
+import com.retail.target.errors.ConnectionException;
+import com.retail.target.errors.ResourceNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -27,13 +29,13 @@ public class ProductNameWebserviceClient {
         try{
             result = restTemplate.getForObject(url, String.class);
         } catch (RestClientException ex){
-            log.error("error while getting name from name ws");
-            throw ex;
+            log.error("error while getting name from name ws", ex);
+            throw new ConnectionException("connection exception");
         }
         return result;
     }
 
-    public ProductFromService getProduct(Long productId) throws IOException {
+    public ProductFromService getProduct(Long productId) {
         ObjectMapper mapper = new ObjectMapper();
         ProductFromService productFromService = new ProductFromService();
         String rest = get(Constants.PRODUCT_NAME_WS_URL + productId.toString());
@@ -41,8 +43,8 @@ public class ProductNameWebserviceClient {
             productFromService = mapper.readValue(rest, ProductFromService.class);
             log.info("got product name from name ws for id: " + productId.toString());
         } catch (IOException ex) {
-            log.error("could not parse JSON response from name ws " + productFromService.toString());
-            throw ex;
+            log.error("could not parse JSON response from name ws " + productFromService.toString(), ex);
+            throw new ResourceNotFoundException("could not fetch name");
         }
         return productFromService;
     }

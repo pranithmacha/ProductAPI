@@ -18,7 +18,7 @@ public interface ProductService {
      * @return
      * @throws IOException
      */
-    ProductDTO getProduct(long id) throws IOException;
+    ProductDTO getProduct(long id);
 
     /**
      * service method to update a product
