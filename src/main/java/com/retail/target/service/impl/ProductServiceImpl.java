@@ -1,5 +1,6 @@
 package com.retail.target.service.impl;
 
+import com.retail.target.dto.PriceDTO;
 import com.retail.target.dto.ProductDTO;
 import com.retail.target.data.ProductDAO;
 import com.retail.target.data.ProductFromService;
@@ -43,9 +44,12 @@ public class ProductServiceImpl implements ProductService {
             log.error("could not find product with id: " + productId);
             throw new ResourceNotFoundException("product not found");
         }
+        PriceDTO price = new PriceDTO();
+        price.setCurrencyCode("USD");
+        price.setValue(productDAO.getPrice());
         ProductDTO product = new ProductDTO();
         ProductFromService productFromService = productNameWebserviceClient.getProduct(productId);
-        product.setPrice(productDAO.getPrice());
+        product.setCurrent_price(price);
         product.setName(productFromService.getName());
         product.setId(productId);
         return product;
@@ -59,7 +63,7 @@ public class ProductServiceImpl implements ProductService {
             log.error("could not find product with id: " + productId);
             throw new ResourceNotFoundException("product not found");
         }
-        productDAO.setPrice(product.getPrice());
+        productDAO.setPrice(product.getCurrent_price().getValue());
         myProductRepository.save(productDAO);
         log.info("successfully update product with id: " + productId);
     }

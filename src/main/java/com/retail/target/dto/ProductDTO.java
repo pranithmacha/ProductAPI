@@ -7,7 +7,7 @@ public class ProductDTO {
 
     private Long id;
     private String name;
-    private double price;
+    private PriceDTO current_price;
 
     public Long getId() {
         return id;
@@ -25,11 +25,13 @@ public class ProductDTO {
         this.name = name;
     }
 
-    public double getPrice() {
-        return price;
+    public PriceDTO getCurrent_price() {
+        return current_price;
     }
 
-    public void setPrice(double price) {
-        this.price = price;
+    public void setCurrent_price(PriceDTO current_price) {
+        this.current_price = current_price;
     }
+
+
 }
