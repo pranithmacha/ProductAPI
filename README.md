@@ -98,6 +98,7 @@ Setup
         Install packages by running pip install -r requirements.txt
      Run server
         To run server, from the same folder, run commad python productnameservice.py
+        Server runs at localhost on port 8100 http://127.0.0.1:8100/ 
 
 GET /products/{id}           
 
@@ -111,6 +112,11 @@ GET /products/{id}
                          "name": "big movie",
                      }
         
+          if the product information is not available, returns null for name 
+        {
+            "id": "123456711",
+            "name": null
+        }
 POST /products/{id}           
 
     This endpoint updates price of a product by product id. 
@@ -124,4 +130,4 @@ POST /products/{id}
         
     Response
         Http status 201, indicating operation was successful
-        Http status 400 Bad request, if name or id is not provided
+        Http status 400 Bad request, if name or id or both is not provided
