@@ -25,13 +25,10 @@ import static org.springframework.data.cassandra.repository.support.BasicMapId.i
 public class ProductServiceImpl implements ProductService {
 
     @Autowired
-    private ProductRepository productRepository;
-
-    @Autowired
     private ProductNameWebserviceClient productNameWebserviceClient;
 
     @Autowired
-    private ProductRepository myProductRepository;
+    private ProductRepository productRepository;
 
     private final Logger log = LoggerFactory.getLogger(this.getClass());
 
@@ -39,7 +36,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public ProductDTO getProduct(long productId) {
         MapId mapid = id("productid", productId);
-        ProductDAO productDAO = myProductRepository.findOne(mapid);
+        ProductDAO productDAO = productRepository.findOne(mapid);
         if (productDAO == null) {
             log.error("could not find product with id: " + productId);
             throw new ResourceNotFoundException("product not found");
@@ -58,13 +55,13 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public void updateProduct(ProductDTO product, long productId) {
         MapId mapid = id("productid", productId);
-        ProductDAO productDAO = myProductRepository.findOne(mapid);
+        ProductDAO productDAO = productRepository.findOne(mapid);
         if (productDAO == null) {
             log.error("could not find product with id: " + productId);
             throw new ResourceNotFoundException("product not found");
         }
         productDAO.setPrice(product.getCurrent_price().getValue());
-        myProductRepository.save(productDAO);
+        productRepository.save(productDAO);
         log.info("successfully update product with id: " + productId);
     }
 }
