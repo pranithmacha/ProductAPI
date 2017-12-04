@@ -2,7 +2,7 @@ package com.retail.target.controller;
 
 
 import com.retail.target.dto.ProductDTO;
-import com.retail.target.errors.ResourceNotFoundException;
+import com.retail.target.errors.ValidationException;
 import com.retail.target.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,8 +13,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RequestBody;
-
-import java.io.IOException;
 
 
 /**
@@ -50,6 +48,8 @@ public class ProductController {
     @PutMapping(path = "/{id}")
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     public void updateProduct(@RequestBody ProductDTO product, @PathVariable("id") long id) {
+        if(product.getCurrent_price() == null)
+            throw new ValidationException("price cannot be empty");
         productService.updateProduct(product, id);
     }
 }
