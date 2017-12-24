@@ -1,6 +1,6 @@
-# TargetProductAPI
+# ProductAPI
 
-Target Product API consists of two services. Product API, a Spring Boot REST service which is used 
+Product API consists of two services. Product API, a Spring Boot REST service which is used 
 to get product details like product name and price. Product API gets product name from Product Name REST service 
 which is a Python Flask REST service. 
                                                      
